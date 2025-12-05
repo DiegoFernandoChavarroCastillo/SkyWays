@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Aeronaves - Skyways Airlines</title>
+    <link rel="stylesheet" href="gestionAeronaves.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Skyways</h1>
+                        <p>Airlines</p>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="listaVuelos.html" class="nav-item">
+                        <span class="nav-icon">✈️</span>
+                        <span>Programación de vuelos</span>
+                    </a>
+                    <a href="nuevoVuelo.html" class="nav-item">
+                        <span class="nav-icon">➕</span>
+                        <span>Crear Vuelo</span>
+                    </a>
+                    <a href="gestionAeronaves.html" class="nav-item active">
+                        <span class="nav-icon">🛩️</span>
+                        <span>Gestión de aeronaves</span>
+                    </a>
+                    <a href="tripulacion.html" class="nav-item">
+                        <span class="nav-icon">👥</span>
+                        <span>Tripulación</span>
+                    </a>
+                    <a href="reportes.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        <span>Reportes</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="nav-item" id="themeToggle">
+                    <span class="nav-icon" id="themeIcon">🌙</span>
+                    <span id="themeText">Modo Oscuro</span>
+                </button>
+                <a href="https://wa.link/crq4a2" class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Soporte</span>
+                </a>
+                
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <div class="header-content">
+                    <div class="header-text">
+                        <h1>Gestión de Aeronaves</h1>
+                        <p>Administra y monitorea la flota completa de Skyways Airlines</p>
+                    </div>
+                    <button class="btn-primary" id="addAircraftBtn">
+                        <span class="btn-icon">➕</span>
+                        <span>Nueva Aeronave</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(40, 167, 69, 0.1); color: var(--success);">
+                            <i class="fas fa-plane"></i>
+                        </span>
+                        <span class="stat-title">Total Aeronaves</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="totalAircraft">8</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(40, 167, 69, 0.1); color: var(--success);">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                        <span class="stat-title">Disponibles</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="availableAircraft">4</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(220, 53, 69, 0.1); color: var(--danger);">
+                            <i class="fas fa-plane-departure"></i>
+                        </span>
+                        <span class="stat-title">En Vuelo</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="inFlightAircraft">2</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(255, 193, 7, 0.1); color: var(--warning);">
+                            <i class="fas fa-tools"></i>
+                        </span>
+                        <span class="stat-title">Mantenimiento</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="maintenanceAircraft">2</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters and Actions -->
+            <section class="filters-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Buscar aeronave por ID, modelo...">
+                    </div>
+                </div>
+
+                <div class="filter-buttons">
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="statusFilterBtn">
+                            <span>Estado</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="statusFilterMenu">
+                            <button class="dropdown-item" data-filter="status" data-value="all">Todos los estados</button>
+                            <button class="dropdown-item" data-filter="status" data-value="available">Disponible</button>
+                            <button class="dropdown-item" data-filter="status" data-value="assigned">Asignado</button>
+                            <button class="dropdown-item" data-filter="status" data-value="maintenance">Mantenimiento</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="modelFilterBtn">
+                            <span>Modelo</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="modelFilterMenu">
+                            <button class="dropdown-item" data-filter="model" data-value="all">Todos los modelos</button>
+                            <button class="dropdown-item" data-filter="model" data-value="Boeing 737">Boeing 737</button>
+                            <button class="dropdown-item" data-filter="model" data-value="Airbus A320">Airbus A320</button>
+                            <button class="dropdown-item" data-filter="model" data-value="Boeing 787">Boeing 787</button>
+                            <button class="dropdown-item" data-filter="model" data-value="Airbus A350">Airbus A350</button>
+                        </div>
+                    </div>
+
+                    <button class="clear-filters-btn" id="clearFiltersBtn">
+                        <span>Limpiar filtros</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Active Filters -->
+            <div class="active-filters" id="activeFilters"></div>
+
+            <!-- Aircraft Grid -->
+            <section class="aircraft-section">
+                <div class="table-header">
+                    <div class="results-info">
+                        <span id="resultsCount">Mostrando 8 de 8 aeronaves</span>
+                    </div>
+                    <div class="view-controls">
+                        <button class="view-btn active" id="gridViewBtn">
+                            <span>▦</span>
+                        </button>
+                        <button class="view-btn" id="listViewBtn">
+                            <span>📋</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grid View -->
+                <div class="aircraft-grid" id="aircraftGrid">
+                    <!-- Aircraft cards will be generated by JavaScript -->
+                </div>
+
+                <!-- List View (Hidden by default) -->
+                <div class="aircraft-list hidden" id="aircraftList">
+                    <div class="list-header">
+                        <div class="list-column">ID / Modelo</div>
+                        <div class="list-column">Capacidad</div>
+                        <div class="list-column">Estado</div>
+                        <div class="list-column">Último Vuelo</div>
+                        <div class="list-column">Horas Totales</div>
+                        <div class="list-column">Acciones</div>
+                    </div>
+                    <div class="list-body" id="aircraftListBody">
+                        <!-- List rows will be generated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Aircraft Details -->
+    <div class="modal" id="aircraftModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalles de Aeronave</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content generated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancelBtn">Cerrar</button>
+                <button class="btn-danger" id="modalDeleteBtn">Eliminar</button>
+                <button class="btn-primary" id="modalEditBtn">Editar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Aircraft -->
+    <div class="modal" id="editAircraftModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="editModalTitle">Nueva Aeronave</h2>
+                <button class="modal-close" id="editModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="aircraftForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="aircraftId">ID de Aeronave <span class="required">*</span></label>
+                            <input type="text" id="aircraftId" name="aircraftId" required placeholder="Ej: SK-7371">
+                            <span class="error-message" id="aircraftIdError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aircraftModel">Modelo <span class="required">*</span></label>
+                            <select id="aircraftModel" name="aircraftModel" required>
+                                <option value="">Seleccione modelo</option>
+                                <option value="Boeing 737">Boeing 737</option>
+                                <option value="Airbus A320">Airbus A320</option>
+                                <option value="Boeing 787">Boeing 787</option>
+                                <option value="Airbus A350">Airbus A350</option>
+                                <option value="Boeing 777">Boeing 777</option>
+                                <option value="Airbus A330">Airbus A330</option>
+                            </select>
+                            <span class="error-message" id="aircraftModelError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aircraftCapacity">Capacidad <span class="required">*</span></label>
+                            <input type="number" id="aircraftCapacity" name="aircraftCapacity" required min="50" max="600" placeholder="Ej: 189">
+                            <span class="error-message" id="aircraftCapacityError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aircraftStatus">Estado <span class="required">*</span></label>
+                            <select id="aircraftStatus" name="aircraftStatus" required>
+                                <option value="">Seleccione estado</option>
+                                <option value="available">Disponible</option>
+                                <option value="assigned">Asignado</option>
+                                <option value="maintenance">Mantenimiento</option>
+                            </select>
+                            <span class="error-message" id="aircraftStatusError"></span>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="aircraftManufactureDate">Fecha de Fabricación</label>
+                            <input type="date" id="aircraftManufactureDate" name="aircraftManufactureDate">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aircraftHours">Horas de Vuelo</label>
+                            <input type="number" id="aircraftHours" name="aircraftHours" min="0" placeholder="Ej: 12500">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aircraftLastMaintenance">Último Mantenimiento</label>
+                            <input type="date" id="aircraftLastMaintenance" name="aircraftLastMaintenance">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="aircraftNotes">Notas</label>
+                            <textarea id="aircraftNotes" name="aircraftNotes" rows="3" placeholder="Información adicional sobre la aeronave..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="editModalCancelBtn">Cancelar</button>
+                <button class="btn-primary" id="editModalSaveBtn">Guardar Aeronave</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Procesando...</p>
+    </div>
+
+    <script src="gestionAeronaves.js"></script>
+</body>
+</html>

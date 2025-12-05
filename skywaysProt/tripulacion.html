@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tripulación - Skyways Airlines</title>
+    <link rel="stylesheet" href="tripulacion.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Skyways</h1>
+                        <p>Airlines</p>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="listaVuelos.html" class="nav-item">
+                        <span class="nav-icon">✈️</span>
+                        <span>Programación de vuelos</span>
+                    </a>
+                    <a href="nuevoVuelo.html" class="nav-item">
+                        <span class="nav-icon">➕</span>
+                        <span>Crear Vuelo</span>
+                    </a>
+                    <a href="gestionAeronaves.html" class="nav-item">
+                        <span class="nav-icon">🛩️</span>
+                        <span>Gestión de aeronaves</span>
+                    </a>
+                    <a href="tripulacion.html" class="nav-item active">
+                        <span class="nav-icon">👥</span>
+                        <span>Tripulación</span>
+                    </a>
+                    <a href="reportes.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        <span>Reportes</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="nav-item" id="themeToggle">
+                    <span class="nav-icon" id="themeIcon">🌙</span>
+                    <span id="themeText">Modo Oscuro</span>
+                </button>
+                <a href="https://wa.link/crq4a2" class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Soporte</span>
+                </a>
+            
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <div class="header-content">
+                    <div class="header-text">
+                        <h1>Gestión de Tripulación</h1>
+                        <p>Administra y monitorea el personal de vuelo de Skyways Airlines</p>
+                    </div>
+                    <button class="btn-primary" id="addCrewBtn">
+                        <span class="btn-icon">➕</span>
+                        <span>Nuevo Miembro</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(19, 91, 236, 0.1); color: var(--primary);">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <span class="stat-title">Total Tripulación</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="totalCrew">24</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(40, 167, 69, 0.1); color: var(--success);">
+                            <i class="fas fa-user-check"></i>
+                        </span>
+                        <span class="stat-title">Disponibles</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="availableCrew">18</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(220, 53, 69, 0.1); color: var(--danger);">
+                            <i class="fas fa-plane-departure"></i>
+                        </span>
+                        <span class="stat-title">En Vuelo</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="onFlightCrew">4</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(255, 193, 7, 0.1); color: var(--warning);">
+                            <i class="fas fa-bed"></i>
+                        </span>
+                        <span class="stat-title">Descanso</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="restingCrew">2</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon" style="background-color: rgba(108, 117, 125, 0.1); color: #6c757d;">
+                            <i class="fas fa-user-slash"></i>
+                        </span>
+                        <span class="stat-title">Vacaciones</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-value" id="vacationCrew">3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters and Actions -->
+            <section class="filters-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Buscar por nombre, ID, puesto...">
+                    </div>
+                </div>
+
+                <div class="filter-buttons">
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="roleFilterBtn">
+                            <span>Rol</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="roleFilterMenu">
+                            <button class="dropdown-item" data-filter="role" data-value="all">Todos los roles</button>
+                            <button class="dropdown-item" data-filter="role" data-value="piloto">Pilotos</button>
+                            <button class="dropdown-item" data-filter="role" data-value="copiloto">Copilotos</button>
+                            <button class="dropdown-item" data-filter="role" data-value="sobrecargo">Sobrecargos</button>
+                            <button class="dropdown-item" data-filter="role" data-value="ingeniero">Ingenieros</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="statusFilterBtn">
+                            <span>Estado</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="statusFilterMenu">
+                            <button class="dropdown-item" data-filter="status" data-value="all">Todos los estados</button>
+                            <button class="dropdown-item" data-filter="status" data-value="available">Disponible</button>
+                            <button class="dropdown-item" data-filter="status" data-value="assigned">Asignado</button>
+                            <button class="dropdown-item" data-filter="status" data-value="resting">Descanso</button>
+                            <button class="dropdown-item" data-filter="status" data-value="vacation">Vacaciones</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="licenseFilterBtn">
+                            <span>Licencia</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="licenseFilterMenu">
+                            <button class="dropdown-item" data-filter="license" data-value="all">Todas las licencias</button>
+                            <button class="dropdown-item" data-filter="license" data-value="B737">Boeing 737</button>
+                            <button class="dropdown-item" data-filter="license" data-value="A320">Airbus A320</button>
+                            <button class="dropdown-item" data-filter="license" data-value="B787">Boeing 787</button>
+                            <button class="dropdown-item" data-filter="license" data-value="A350">Airbus A350</button>
+                        </div>
+                    </div>
+
+                    <button class="clear-filters-btn" id="clearFiltersBtn">
+                        <span>Limpiar filtros</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Active Filters -->
+            <div class="active-filters" id="activeFilters"></div>
+
+            <!-- Schedule View Toggle -->
+            <div class="view-toggle">
+                <button class="view-toggle-btn active" id="crewViewBtn">
+                    <i class="fas fa-users"></i>
+                    <span>Lista de Tripulación</span>
+                </button>
+                <button class="view-toggle-btn" id="scheduleViewBtn">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendario de Turnos</span>
+                </button>
+            </div>
+
+            <!-- Crew Grid -->
+            <section class="crew-section">
+                <div class="table-header">
+                    <div class="results-info">
+                        <span id="resultsCount">Mostrando 24 de 24 miembros</span>
+                    </div>
+                    <div class="view-controls">
+                        <button class="view-btn active" id="gridViewBtn">
+                            <span>▦</span>
+                        </button>
+                        <button class="view-btn" id="listViewBtn">
+                            <span>📋</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grid View -->
+                <div class="crew-grid" id="crewGrid">
+                    <!-- Crew cards will be generated by JavaScript -->
+                </div>
+
+                <!-- List View (Hidden by default) -->
+                <div class="crew-list hidden" id="crewList">
+                    <div class="list-header">
+                        <div class="list-column">Miembro</div>
+                        <div class="list-column">Rol</div>
+                        <div class="list-column">Licencias</div>
+                        <div class="list-column">Horas Voladas</div>
+                        <div class="list-column">Estado</div>
+                        <div class="list-column">Próximo Vuelo</div>
+                        <div class="list-column">Acciones</div>
+                    </div>
+                    <div class="list-body" id="crewListBody">
+                        <!-- List rows will be generated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Schedule View (Hidden by default) -->
+                <div class="schedule-view hidden" id="scheduleView">
+                    <div class="schedule-header">
+                        <div class="schedule-nav">
+                            <button class="schedule-nav-btn" id="prevWeekBtn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h3 id="scheduleTitle">Semana del 16 al 22 de Octubre, 2023</h3>
+                            <button class="schedule-nav-btn" id="nextWeekBtn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="schedule-legend">
+                            <div class="legend-item">
+                                <span class="legend-color available"></span>
+                                <span>Disponible</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color assigned"></span>
+                                <span>Asignado</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color resting"></span>
+                                <span>Descanso</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color vacation"></span>
+                                <span>Vacaciones</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-table" id="scheduleTable">
+                        <!-- Schedule will be generated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Crew Details -->
+    <div class="modal" id="crewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalles del Miembro</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content generated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancelBtn">Cerrar</button>
+                <button class="btn-danger" id="modalDeleteBtn">Eliminar</button>
+                <button class="btn-primary" id="modalEditBtn">Editar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Crew -->
+    <div class="modal" id="editCrewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="editModalTitle">Nuevo Miembro</h2>
+                <button class="modal-close" id="editModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="crewForm">
+                    <div class="form-tabs">
+                        <button type="button" class="tab-btn active" data-tab="personal">Información Personal</button>
+                        <button type="button" class="tab-btn" data-tab="professional">Información Profesional</button>
+                        <button type="button" class="tab-btn" data-tab="medical">Información Médica</button>
+                    </div>
+
+                    <div class="tab-content active" id="personalTab">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="crewId">ID de Tripulante <span class="required">*</span></label>
+                                <input type="text" id="crewId" name="crewId" required placeholder="Ej: CREW-001">
+                                <span class="error-message" id="crewIdError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewFirstName">Nombre <span class="required">*</span></label>
+                                <input type="text" id="crewFirstName" name="crewFirstName" required placeholder="Ej: Ana">
+                                <span class="error-message" id="crewFirstNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewLastName">Apellidos <span class="required">*</span></label>
+                                <input type="text" id="crewLastName" name="crewLastName" required placeholder="Ej: Torres">
+                                <span class="error-message" id="crewLastNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewEmail">Email <span class="required">*</span></label>
+                                <input type="email" id="crewEmail" name="crewEmail" required placeholder="ejemplo@skyways.com">
+                                <span class="error-message" id="crewEmailError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewPhone">Teléfono</label>
+                                <input type="tel" id="crewPhone" name="crewPhone" placeholder="+52 123 456 7890">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewBirthDate">Fecha de Nacimiento</label>
+                                <input type="date" id="crewBirthDate" name="crewBirthDate">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewNationality">Nacionalidad</label>
+                                <select id="crewNationality" name="crewNationality">
+                                    <option value="">Seleccionar</option>
+                                    <option value="MX">Mexicana</option>
+                                    <option value="US">Estadounidense</option>
+                                    <option value="ES">Española</option>
+                                    <option value="CO">Colombiana</option>
+                                    <option value="AR">Argentina</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="crewAddress">Dirección</label>
+                                <textarea id="crewAddress" name="crewAddress" rows="2" placeholder="Dirección completa..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="professionalTab">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="crewRole">Rol <span class="required">*</span></label>
+                                <select id="crewRole" name="crewRole" required>
+                                    <option value="">Seleccionar rol</option>
+                                    <option value="piloto">Piloto</option>
+                                    <option value="copiloto">Copiloto</option>
+                                    <option value="sobrecargo">Sobrecargo</option>
+                                    <option value="ingeniero">Ingeniero de Vuelo</option>
+                                    <option value="jefe">Jefe de Cabina</option>
+                                </select>
+                                <span class="error-message" id="crewRoleError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewRank">Rango</label>
+                                <select id="crewRank" name="crewRank">
+                                    <option value="">Seleccionar</option>
+                                    <option value="capitan">Capitán</option>
+                                    <option value="primer_oficial">Primer Oficial</option>
+                                    <option value="segundo_oficial">Segundo Oficial</option>
+                                    <option value="senior">Senior</option>
+                                    <option value="junior">Junior</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewLicense">Licencia Principal <span class="required">*</span></label>
+                                <select id="crewLicense" name="crewLicense" required>
+                                    <option value="">Seleccionar licencia</option>
+                                    <option value="B737">Boeing 737</option>
+                                    <option value="A320">Airbus A320</option>
+                                    <option value="B787">Boeing 787</option>
+                                    <option value="A350">Airbus A350</option>
+                                    <option value="B777">Boeing 777</option>
+                                </select>
+                                <span class="error-message" id="crewLicenseError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewAdditionalLicenses">Licencias Adicionales</label>
+                                <div class="multi-select">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="additionalLicenses" value="B737"> Boeing 737
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="additionalLicenses" value="A320"> Airbus A320
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="additionalLicenses" value="B787"> Boeing 787
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="additionalLicenses" value="A350"> Airbus A350
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewFlightHours">Horas de Vuelo</label>
+                                <input type="number" id="crewFlightHours" name="crewFlightHours" min="0" placeholder="Ej: 12500">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewHireDate">Fecha de Contratación</label>
+                                <input type="date" id="crewHireDate" name="crewHireDate">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewStatus">Estado <span class="required">*</span></label>
+                                <select id="crewStatus" name="crewStatus" required>
+                                    <option value="">Seleccionar estado</option>
+                                    <option value="available">Disponible</option>
+                                    <option value="assigned">Asignado</option>
+                                    <option value="resting">Descanso</option>
+                                    <option value="vacation">Vacaciones</option>
+                                    <option value="training">En Entrenamiento</option>
+                                </select>
+                                <span class="error-message" id="crewStatusError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewBase">Base de Operaciones</label>
+                                <select id="crewBase" name="crewBase">
+                                    <option value="">Seleccionar</option>
+                                    <option value="MEX">MEX - Ciudad de México</option>
+                                    <option value="CUN">CUN - Cancún</option>
+                                    <option value="JFK">JFK - Nueva York</option>
+                                    <option value="LAX">LAX - Los Ángeles</option>
+                                    <option value="MIA">MIA - Miami</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="medicalTab">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="crewMedicalExpiry">Vencimiento Médico</label>
+                                <input type="date" id="crewMedicalExpiry" name="crewMedicalExpiry">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewLastMedical">Último Examen</label>
+                                <input type="date" id="crewLastMedical" name="crewLastMedical">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crewBloodType">Tipo de Sangre</label>
+                                <select id="crewBloodType" name="crewBloodType">
+                                    <option value="">Desconocido</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="crewAllergies">Alergias</label>
+                                <textarea id="crewAllergies" name="crewAllergies" rows="2" placeholder="Lista de alergias conocidas..."></textarea>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="crewMedicalNotes">Notas Médicas</label>
+                                <textarea id="crewMedicalNotes" name="crewMedicalNotes" rows="3" placeholder="Información médica adicional..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="editModalCancelBtn">Cancelar</button>
+                <button class="btn-primary" id="editModalSaveBtn">Guardar Miembro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Schedule Assignment -->
+    <div class="modal" id="scheduleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="scheduleModalTitle">Asignar Vuelo</h2>
+                <button class="modal-close" id="scheduleModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="scheduleCrew">Tripulante <span class="required">*</span></label>
+                            <select id="scheduleCrew" name="scheduleCrew" required>
+                                <option value="">Seleccionar tripulante</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="scheduleFlight">Vuelo <span class="required">*</span></label>
+                            <select id="scheduleFlight" name="scheduleFlight" required>
+                                <option value="">Seleccionar vuelo</option>
+                                <option value="SW-1452">SW-1452 - MEX → JFK</option>
+                                <option value="SW-2109">SW-2109 - CUN → LAX</option>
+                                <option value="SW-8843">SW-8843 - GDL → MIA</option>
+                                <option value="SW-3121">SW-3121 - MTY → ORD</option>
+                                <option value="SW-5050">SW-5050 - SJD → YVR</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="scheduleDate">Fecha <span class="required">*</span></label>
+                            <input type="date" id="scheduleDate" name="scheduleDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="scheduleRole">Rol en el Vuelo <span class="required">*</span></label>
+                            <select id="scheduleRole" name="scheduleRole" required>
+                                <option value="">Seleccionar rol</option>
+                                <option value="piloto">Piloto al Mando</option>
+                                <option value="copiloto">Copiloto</option>
+                                <option value="sobrecargo">Sobrecargo</option>
+                                <option value="jefe_cabina">Jefe de Cabina</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="scheduleStart">Hora de Inicio <span class="required">*</span></label>
+                            <input type="time" id="scheduleStart" name="scheduleStart" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="scheduleEnd">Hora de Fin <span class="required">*</span></label>
+                            <input type="time" id="scheduleEnd" name="scheduleEnd" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="scheduleNotes">Notas</label>
+                            <textarea id="scheduleNotes" name="scheduleNotes" rows="3" placeholder="Notas adicionales sobre la asignación..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="scheduleModalCancelBtn">Cancelar</button>
+                <button class="btn-primary" id="scheduleModalSaveBtn">Guardar Asignación</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Procesando...</p>
+    </div>
+
+    <script src="tripulacion.js"></script>
+</body>
+</html>
