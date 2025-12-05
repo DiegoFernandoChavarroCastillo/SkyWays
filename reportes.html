@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes y Análisis - Skyways Airlines</title>
+    <link rel="stylesheet" href="reportes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Date Range Picker -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Skyways</h1>
+                        <p>Airlines</p>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="listaVuelos.html" class="nav-item">
+                        <span class="nav-icon">✈️</span>
+                        <span>Vuelos</span>
+                    </a>
+                    <a href="nuevoVuelo.html" class="nav-item">
+                        <span class="nav-icon">➕</span>
+                        <span>Crear Vuelo</span>
+                    </a>
+                    <a href="gestionAeronaves.html" class="nav-item">
+                        <span class="nav-icon">🛩️</span>
+                        <span>Aeronaves</span>
+                    </a>
+                    <a href="tripulacion.html" class="nav-item">
+                        <span class="nav-icon">👥</span>
+                        <span>Tripulación</span>
+                    </a>
+                    <a href="reportes.html" class="nav-item active">
+                        <span class="nav-icon">📈</span>
+                        <span>Reportes</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="nav-item" id="themeToggle">
+                    <span class="nav-icon" id="themeIcon">🌙</span>
+                    <span id="themeText">Modo Oscuro</span>
+                </button>
+                <a href="https://wa.link/crq4a2" class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Soporte</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <div class="header-content">
+                    <div class="header-text">
+                        <h1>Reportes y Análisis</h1>
+                        <p>Análisis detallado y reportes operacionales de Skyways Airlines</p>
+                    </div>
+                    <button class="btn-primary" id="generateReportBtn">
+                        <span class="btn-icon">📋</span>
+                        <span>Generar Reporte</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Date Range Selector -->
+            <section class="date-range-section">
+                <div class="date-range-container">
+                    <div class="date-range-header">
+                        <h3><i class="fas fa-calendar-alt"></i> Periodo de Análisis</h3>
+                    </div>
+                    <div class="date-range-controls">
+                        <div class="date-range-picker">
+                            <i class="fas fa-calendar"></i>
+                            <input type="text" id="dateRangePicker" placeholder="Seleccionar rango de fechas">
+                        </div>
+                        <div class="quick-periods">
+                            <button class="period-btn active" data-period="7d">Últimos 7 días</button>
+                            <button class="period-btn" data-period="30d">Últimos 30 días</button>
+                            <button class="period-btn" data-period="90d">Últimos 90 días</button>
+                            <button class="period-btn" data-period="ytd">Año en curso</button>
+                            <button class="period-btn" data-period="last-year">Año anterior</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KPI Dashboard -->
+            <div class="kpi-dashboard">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-icon" style="background-color: rgba(19, 91, 236, 0.1); color: var(--primary);">
+                            <i class="fas fa-plane"></i>
+                        </span>
+                        <span class="kpi-title">Vuelos Operados</span>
+                    </div>
+                    <div class="kpi-body">
+                        <span class="kpi-value" id="totalFlights">1,245</span>
+                        <span class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i> 12.5%
+                        </span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-period">vs. período anterior</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-icon" style="background-color: rgba(40, 167, 69, 0.1); color: var(--success);">
+                            <i class="fas fa-user-check"></i>
+                        </span>
+                        <span class="kpi-title">Ocupación Promedio</span>
+                    </div>
+                    <div class="kpi-body">
+                        <span class="kpi-value" id="avgOccupancy">84.2%</span>
+                        <span class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i> 3.8%
+                        </span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-period">vs. período anterior</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-icon" style="background-color: rgba(255, 193, 7, 0.1); color: var(--warning);">
+                            <i class="fas fa-clock"></i>
+                        </span>
+                        <span class="kpi-title">Puntualidad</span>
+                    </div>
+                    <div class="kpi-body">
+                        <span class="kpi-value" id="punctuality">91.5%</span>
+                        <span class="kpi-change negative">
+                            <i class="fas fa-arrow-down"></i> 1.2%
+                        </span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-period">vs. período anterior</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-icon" style="background-color: rgba(220, 53, 69, 0.1); color: var(--danger);">
+                            <i class="fas fa-times-circle"></i>
+                        </span>
+                        <span class="kpi-title">Cancelaciones</span>
+                    </div>
+                    <div class="kpi-body">
+                        <span class="kpi-value" id="cancellations">2.3%</span>
+                        <span class="kpi-change positive">
+                            <i class="fas fa-arrow-down"></i> 0.8%
+                        </span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-period">vs. período anterior</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-icon" style="background-color: rgba(111, 66, 193, 0.1); color: var(--resting);">
+                            <i class="fas fa-dollar-sign"></i>
+                        </span>
+                        <span class="kpi-title">Ingresos Totales</span>
+                    </div>
+                    <div class="kpi-body">
+                        <span class="kpi-value" id="totalRevenue">$4.2M</span>
+                        <span class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i> 8.7%
+                        </span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-period">vs. período anterior</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <!-- Row 1 -->
+                <div class="chart-row">
+                    <div class="chart-card full-width">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-line"></i> Vuelos por Día</h3>
+                            <div class="chart-actions">
+                                <button class="chart-action-btn" data-chart="flights-per-day">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="chart-action-btn" data-chart="flights-per-day">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="flightsPerDayChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="chart-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-plane-departure"></i> Rutas Más Activas</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="topRoutesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-users"></i> Ocupación por Tipo de Vuelo</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="occupancyByTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="chart-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-pie"></i> Distribución por Estado</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="statusDistributionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-bar"></i> Aeronaves Más Utilizadas</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="topAircraftChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-area"></i> Tendencia de Ocupación</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="occupancyTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nueva Sección: Estadísticas Medioambientales -->
+<section class="environment-section">
+    <div class="section-header">
+        <h3><i class="fas fa-leaf"></i> Sostenibilidad y Medio Ambiente</h3>
+        <span class="section-subtitle">Monitoreo de impacto ambiental y eficiencia</span>
+    </div>
+    
+    <div class="environment-stats">
+        <div class="environment-card">
+            <div class="environment-card-header">
+                <div class="environment-icon carbon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <div class="environment-info">
+                    <h4>Huella de Carbono</h4>
+                    <p>Total del mes actual</p>
+                </div>
+            </div>
+            <div class="environment-card-body">
+                <div class="carbon-metric">
+                    <span class="metric-value" id="carbonFootprint">2,450</span>
+                    <span class="metric-unit">ton CO₂</span>
+                </div>
+                <div class="carbon-change positive">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>12% menos que el mes anterior</span>
+                </div>
+            </div>
+            <div class="environment-card-footer">
+                <div class="carbon-breakdown">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Vuelos</span>
+                        <span class="breakdown-value">1,850 t</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Operaciones</span>
+                        <span class="breakdown-value">350 t</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Infraestructura</span>
+                        <span class="breakdown-value">250 t</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="environment-card">
+            <div class="environment-card-header">
+                <div class="environment-icon fuel">
+                    <i class="fas fa-gas-pump"></i>
+                </div>
+                <div class="environment-info">
+                    <h4>Eficiencia de Combustible</h4>
+                    <p>Consumo promedio por vuelo</p>
+                </div>
+            </div>
+            <div class="environment-card-body">
+                <div class="fuel-metric">
+                    <span class="metric-value" id="fuelEfficiency">4.2</span>
+                    <span class="metric-unit">L/100km·pax</span>
+                </div>
+                <div class="fuel-change positive">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>8% más eficiente que 2022</span>
+                </div>
+            </div>
+            <div class="environment-card-footer">
+                <div class="fuel-stats">
+                    <div class="fuel-stat">
+                        <span class="stat-label">Total mes</span>
+                        <span class="stat-value">4.8M L</span>
+                    </div>
+                    <div class="fuel-stat">
+                        <span class="stat-label">Ahorro vs meta</span>
+                        <span class="stat-value positive">+3.5%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="environment-card">
+            <div class="environment-card-header">
+                <div class="environment-icon sustainability">
+                    <i class="fas fa-recycle"></i>
+                </div>
+                <div class="environment-info">
+                    <h4>Compensación Ambiental</h4>
+                    <p>Programas de sostenibilidad</p>
+                </div>
+            </div>
+            <div class="environment-card-body">
+                <div class="sustainability-metric">
+                    <span class="metric-value" id="carbonOffset">85</span>
+                    <span class="metric-unit">% compensado</span>
+                </div>
+                <div class="offset-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <span class="progress-text">85% del objetivo anual</span>
+                </div>
+            </div>
+            <div class="environment-card-footer">
+                <div class="offset-programs">
+                    <div class="program-item">
+                        <i class="fas fa-tree"></i>
+                        <span>45,000 árboles</span>
+                    </div>
+                    <div class="program-item">
+                        <i class="fas fa-sun"></i>
+                        <span>Energía renovable</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="environment-card">
+            <div class="environment-card-header">
+                <div class="environment-icon fleet">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <div class="environment-info">
+                    <h4>Flota Ecológica</h4>
+                    <p>Aeronaves de bajo consumo</p>
+                </div>
+            </div>
+            <div class="environment-card-body">
+                <div class="fleet-metric">
+                    <span class="metric-value" id="ecoFleet">42</span>
+                    <span class="metric-unit">% de la flota</span>
+                </div>
+                <div class="fleet-composition">
+                    <div class="fleet-type">
+                        <span class="type-label">A320neo</span>
+                        <span class="type-percent">25%</span>
+                    </div>
+                    <div class="fleet-type">
+                        <span class="type-label">B737 MAX</span>
+                        <span class="type-percent">17%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="environment-card-footer">
+                <div class="fleet-target">
+                    <span>Meta 2025: 60% flota ecológica</span>
+                    <div class="target-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <!-- Detailed Reports -->
+            <section class="reports-section">
+                <div class="reports-header">
+                    <h2><i class="fas fa-file-alt"></i> Reportes Detallados</h2>
+                    <div class="reports-filter">
+                        <select id="reportTypeFilter">
+                            <option value="all">Todos los reportes</option>
+                            <option value="operational">Operacionales</option>
+                            <option value="financial">Financieros</option>
+                            <option value="maintenance">Mantenimiento</option>
+                            <option value="crew">Tripulación</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="reports-grid">
+                    <!-- Report cards will be generated by JavaScript -->
+                </div>
+
+                <div class="reports-actions">
+                    <button class="btn-secondary" id="loadMoreReportsBtn">
+                        <i class="fas fa-plus"></i> Cargar más reportes
+                    </button>
+                </div>
+            </section>
+            
+            
+            <!-- Export Section -->
+            <section class="export-section">
+                <div class="export-card">
+                    <div class="export-header">
+                        <h3><i class="fas fa-file-export"></i> Exportar Reportes</h3>
+                        <p>Exporta los datos de análisis en diferentes formatos</p>
+                    </div>
+                    <div class="export-options">
+                        <button class="export-option-btn">
+                            <i class="fas fa-file-pdf" style="color: #e74c3c;"></i>
+                            <span>PDF</span>
+                        </button>
+                        <button class="export-option-btn">
+                            <i class="fas fa-file-excel" style="color: #27ae60;"></i>
+                            <span>Excel</span>
+                        </button>
+                        <button class="export-option-btn">
+                            <i class="fas fa-file-csv" style="color: #3498db;"></i>
+                            <span>CSV</span>
+                        </button>
+                        <button class="export-option-btn">
+                            <i class="fas fa-file-image" style="color: #9b59b6;"></i>
+                            <span>Imagen</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Report Details -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalles del Reporte</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content generated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancelBtn">Cerrar</button>
+                <button class="btn-primary" id="modalDownloadBtn">
+                    <i class="fas fa-download"></i> Descargar Reporte
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Generate Report -->
+    <div class="modal" id="generateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="generateModalTitle">Generar Nuevo Reporte</h2>
+                <button class="modal-close" id="generateModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="reportForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="reportName">Nombre del Reporte <span class="required">*</span></label>
+                            <input type="text" id="reportName" name="reportName" required placeholder="Ej: Reporte Mensual Octubre 2023">
+                            <span class="error-message" id="reportNameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reportType">Tipo de Reporte <span class="required">*</span></label>
+                            <select id="reportType" name="reportType" required>
+                                <option value="">Seleccionar tipo</option>
+                                <option value="operational">Operacional</option>
+                                <option value="financial">Financiero</option>
+                                <option value="maintenance">Mantenimiento</option>
+                                <option value="crew">Tripulación</option>
+                                <option value="safety">Seguridad</option>
+                                <option value="customer">Satisfacción del Cliente</option>
+                            </select>
+                            <span class="error-message" id="reportTypeError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reportPeriod">Periodo <span class="required">*</span></label>
+                            <select id="reportPeriod" name="reportPeriod" required>
+                                <option value="">Seleccionar periodo</option>
+                                <option value="daily">Diario</option>
+                                <option value="weekly">Semanal</option>
+                                <option value="monthly">Mensual</option>
+                                <option value="quarterly">Trimestral</option>
+                                <option value="yearly">Anual</option>
+                                <option value="custom">Personalizado</option>
+                            </select>
+                            <span class="error-message" id="reportPeriodError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reportFormat">Formato <span class="required">*</span></label>
+                            <select id="reportFormat" name="reportFormat" required>
+                                <option value="">Seleccionar formato</option>
+                                <option value="pdf">PDF</option>
+                                <option value="excel">Excel</option>
+                                <option value="csv">CSV</option>
+                                <option value="html">HTML</option>
+                            </select>
+                            <span class="error-message" id="reportFormatError"></span>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="reportDateRange">Rango de Fechas <span class="required">*</span></label>
+                            <div class="date-range-picker-modal">
+                                <i class="fas fa-calendar"></i>
+                                <input type="text" id="reportDateRange" name="reportDateRange" required placeholder="Seleccionar rango de fechas">
+                            </div>
+                            <span class="error-message" id="reportDateRangeError"></span>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="reportDescription">Descripción</label>
+                            <textarea id="reportDescription" name="reportDescription" rows="3" placeholder="Descripción del reporte..."></textarea>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Métricas a Incluir</label>
+                            <div class="metrics-grid">
+                                <label class="metric-checkbox">
+                                    <input type="checkbox" name="metrics" value="flights" checked>
+                                    <span>Vuelos Operados</span>
+                                </label>
+                                <label class="metric-checkbox">
+                                    <input type="checkbox" name="metrics" value="occupancy" checked>
+                                    <span>Ocupación</span>
+                                </label>
+                                <label class="metric-checkbox">
+                                    <input type="checkbox" name="metrics" value="punctuality" checked>
+                                    <span>Puntualidad</span>
+                                </label>
+                                <label class="metric-checkbox">
+                                    <input type="checkbox" name="metrics" value="revenue" checked>
+                                    <span>Ingresos</span>
+                                </label>
+                                <label class="metric-checkbox">
+                                    <input type="checkbox" name="metrics" value="fuel">
+                                    <span>Consumo de Combustible</span>
+                                </label>
+                                <label class="metric-checkbox">
+                                    <input type="checkbox" name="metrics" value="maintenance">
+                                    <span>Mantenimiento</span>
+                                </label>
+                                <label class="metric-checkbox">
+                                    <input type="checkbox" name="metrics" value="crew">
+                                    <span>Rendimiento de Tripulación</span>
+                                </label>
+                                <label class="metric-checkbox">
+                                    <input type="checkbox" name="metrics" value="safety">
+                                    <span>Métricas de Seguridad</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Destinatarios del Reporte</label>
+                            <div class="recipients-grid">
+                                <label class="recipient-checkbox">
+                                    <input type="checkbox" name="recipients" value="management" checked>
+                                    <span>Gerencia</span>
+                                </label>
+                                <label class="recipient-checkbox">
+                                    <input type="checkbox" name="recipients" value="operations">
+                                    <span>Operaciones</span>
+                                </label>
+                                <label class="recipient-checkbox">
+                                    <input type="checkbox" name="recipients" value="finance">
+                                    <span>Finanzas</span>
+                                </label>
+                                <label class="recipient-checkbox">
+                                    <input type="checkbox" name="recipients" value="maintenance">
+                                    <span>Mantenimiento</span>
+                                </label>
+                                <label class="recipient-checkbox">
+                                    <input type="checkbox" name="recipients" value="crew">
+                                    <span>Tripulación</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="generateModalCancelBtn">Cancelar</button>
+                <button class="btn-primary" id="generateModalSaveBtn">
+                    <i class="fas fa-cogs"></i> Generar Reporte
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Generando reporte...</p>
+    </div>
+
+    <!-- Daterangepicker dependencies -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+    <script src="reportes.js"></script>
+</body>
+</html>

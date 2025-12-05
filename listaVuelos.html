@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Vuelos Programados - Skyways Airlines</title>
+    <link rel="stylesheet" href="listaVuelos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Skyways</h1>
+                        <p>Airlines</p>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="listaVuelos.html" class="nav-item active">
+                        <span class="nav-icon">✈️</span>
+                        <span>Programación de vuelos</span>
+                    </a>
+                    <a href="nuevoVuelo.html" class="nav-item">
+                        <span class="nav-icon">➕</span>
+                        <span>Crear Vuelo</span>
+                    </a>
+                    <a href="gestionAeronaves.html" class="nav-item">
+                        <span class="nav-icon">🛩️</span>
+                        <span>Gestión de aeronaves</span>
+                    </a>
+                    <a href="tripulacion.html" class="nav-item">
+                        <span class="nav-icon">👥</span>
+                        <span>Tripulación</span>
+                    </a>
+                    <a href="reportes.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        <span>Reportes</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="nav-item" id="themeToggle">
+                    <span class="nav-icon" id="themeIcon">🌙</span>
+                    <span id="themeText">Modo Oscuro</span>
+                </button>
+                <a href="https://wa.link/crq4a2" class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>Soporte</span>
+                </a>
+            
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <div class="header-content">
+                    <div class="header-text">
+                        <h1>Lista de Vuelos Programados</h1>
+                        <p>Gestiona y monitorea todos los vuelos de Skyways Airlines.</p>
+                    </div>
+                    <button class="btn-primary" id="createFlightBtn">
+                        <span class="btn-icon">➕</span>
+                        <span>Crear nuevo vuelo</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Filters and Search -->
+            <section class="filters-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Buscar por ID, ruta, aeronave...">
+                    </div>
+                </div>
+
+                <div class="filter-buttons">
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="dateFilterBtn">
+                            <span>Fecha</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="dateFilterMenu">
+                            <button class="dropdown-item" data-filter="date" data-value="all">Todas las fechas</button>
+                            <button class="dropdown-item" data-filter="date" data-value="today">Hoy</button>
+                            <button class="dropdown-item" data-filter="date" data-value="tomorrow">Mañana</button>
+                            <button class="dropdown-item" data-filter="date" data-value="week">Esta semana</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="statusFilterBtn">
+                            <span>Estado</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="statusFilterMenu">
+                            <button class="dropdown-item" data-filter="status" data-value="all">Todos</button>
+                            <button class="dropdown-item" data-filter="status" data-value="scheduled">Programado</button>
+                            <button class="dropdown-item" data-filter="status" data-value="in-route">En ruta</button>
+                            <button class="dropdown-item" data-filter="status" data-value="delayed">Retrasado</button>
+                            <button class="dropdown-item" data-filter="status" data-value="cancelled">Cancelado</button>
+                            <button class="dropdown-item" data-filter="status" data-value="completed">Completado</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="airportFilterBtn">
+                            <span>Aeropuerto</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+                        <div class="dropdown-menu" id="airportFilterMenu">
+                            <button class="dropdown-item" data-filter="airport" data-value="all">Todos</button>
+                            <button class="dropdown-item" data-filter="airport" data-value="JFK">JFK - Nueva York</button>
+                            <button class="dropdown-item" data-filter="airport" data-value="LAX">LAX - Los Angeles</button>
+                            <button class="dropdown-item" data-filter="airport" data-value="MEX">MEX - Ciudad de México</button>
+                            <button class="dropdown-item" data-filter="airport" data-value="CUN">CUN - Cancún</button>
+                            <button class="dropdown-item" data-filter="airport" data-value="MIA">MIA - Miami</button>
+                        </div>
+                    </div>
+
+                    <button class="clear-filters-btn" id="clearFiltersBtn">
+                        <span>Limpiar filtros</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Active Filters -->
+            <div class="active-filters" id="activeFilters"></div>
+
+            <!-- Flights Table -->
+            <section class="table-section">
+                <div class="table-header">
+                    <div class="results-info">
+                        <span id="resultsCount">Mostrando 0 de 0 vuelos</span>
+                    </div>
+                    <div class="view-controls">
+                        <button class="view-btn active" id="tableViewBtn">
+                            <span>📋</span>
+                        </button>
+                        <button class="view-btn" id="cardViewBtn">
+                            <span>▦</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container" id="tableView">
+                    <table class="flights-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <button class="sort-btn" data-sort="id">
+                                        ID de vuelo <span class="sort-icon"></span>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button class="sort-btn" data-sort="route">
+                                        Ruta <span class="sort-icon"></span>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button class="sort-btn" data-sort="date">
+                                        Fecha <span class="sort-icon"></span>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button class="sort-btn" data-sort="time">
+                                        Hora <span class="sort-icon"></span>
+                                    </button>
+                                </th>
+                                <th>Aeronave asignada</th>
+                                <th>Responsable</th>
+                                <th>
+                                    <button class="sort-btn" data-sort="status">
+                                        Estado <span class="sort-icon"></span>
+                                    </button>
+                                </th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="flightsTableBody">
+                            <!-- Rows generated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Card View (Hidden by default) -->
+                <div class="cards-container hidden" id="cardView"></div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Mostrando 1-10 de 20 resultados</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prevBtn" disabled>Anterior</button>
+                        <div class="pagination-numbers" id="paginationNumbers"></div>
+                        <button class="pagination-btn" id="nextBtn">Siguiente</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Flight Details -->
+    <div class="modal" id="flightModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalles del Vuelo</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content generated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancelBtn">Cerrar</button>
+                <button class="btn-primary" id="modalEditBtn">Editar Vuelo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="listaVuelos.js"></script>
+</body>
+</html>
